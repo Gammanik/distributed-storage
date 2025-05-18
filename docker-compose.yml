@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  rest:
+    build:
+      context: .
+      dockerfile: cmd/rest-server/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - storage1
+      - storage2
+
+  storage1:
+    build:
+      context: .
+      dockerfile: cmd/storage-node/Dockerfile
+    ports:
+      - "9001:9000"
+    environment:
+      - NODE_ID=1
+
+  storage2:
+    build:
+      context: .
+      dockerfile: cmd/storage-node/Dockerfile
+    ports:
+      - "9002:9000"
+    environment:
+      - NODE_ID=2

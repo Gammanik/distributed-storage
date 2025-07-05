@@ -10,6 +10,14 @@ services:
     depends_on:
       - storage1
       - storage2
+      - storage3
+      - storage4
+      - storage5
+      - storage6
+    environment:
+      - STORAGE_POOL=http://storage1:9000,http://storage2:9000,http://storage3:9000,http://storage4:9000,http://storage5:9000,http://storage6:9000
+    volumes:
+      - meta_data:/data
 
   storage1:
     build:
@@ -19,6 +27,8 @@ services:
       - "9001:9000"
     environment:
       - NODE_ID=1
+    volumes:
+      - storage1_data:/data
 
   storage2:
     build:
@@ -28,3 +38,58 @@ services:
       - "9002:9000"
     environment:
       - NODE_ID=2
+    volumes:
+      - storage2_data:/data
+
+  storage3:
+    build:
+      context: .
+      dockerfile: cmd/storage-node/Dockerfile
+    ports:
+      - "9003:9000"
+    environment:
+      - NODE_ID=3
+    volumes:
+      - storage3_data:/data
+
+  storage4:
+    build:
+      context: .
+      dockerfile: cmd/storage-node/Dockerfile
+    ports:
+      - "9004:9000"
+    environment:
+      - NODE_ID=4
+    volumes:
+      - storage4_data:/data
+
+  storage5:
+    build:
+      context: .
+      dockerfile: cmd/storage-node/Dockerfile
+    ports:
+      - "9005:9000"
+    environment:
+      - NODE_ID=5
+    volumes:
+      - storage5_data:/data
+
+  storage6:
+    build:
+      context: .
+      dockerfile: cmd/storage-node/Dockerfile
+    ports:
+      - "9006:9000"
+    environment:
+      - NODE_ID=6
+    volumes:
+      - storage6_data:/data
+
+volumes:
+  meta_data:
+  storage1_data:
+  storage2_data:
+  storage3_data:
+  storage4_data:
+  storage5_data:
+  storage6_data:
